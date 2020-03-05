@@ -9,25 +9,43 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nom d'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="@Url.Action("Index","Home")">Bon Afpétit ! Administration Restaurant</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarRight" aria-controls="navbarRight" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarRight">
+            <ul class="navbar-nav ml-auto">
+                @{
+                    if (Session["restaurant"] != null)
+                    {
+                        Afpetit_Back_Resto.Models.Restaurant restaurant = (Afpetit_Back_Resto.Models.Restaurant)Session["restaurant"];
+                        if (restaurant != null)
+                        {
+                            <li class="nav-item active px-1">
+                                <a class="nav-link btn btn-outline-secondary" href="@Url.Action("Index","Produits")">Mes Produits</a>
+                            </li>
+                            <li class="nav-item active px-1">
+                                <a class="nav-link btn btn-outline-secondary" href="@Url.Action("Details","Restaurants")">Détail</a>
+                            </li>
+                            <li class="nav-item active px-1">
+                                <a class="nav-link btn btn-outline-secondary" href="@Url.Action("Edit","Restaurants")">Edit</a>
+                            </li>
+                            <span class="navbar-text px-1">
+                                @restaurant.Nom
+                            </span>
+                        }
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Connexion", "Connexion", "Restaurants", null, new { @class = "nav-link" })
+                        </li>
+                    }
+                }
+            </ul>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />

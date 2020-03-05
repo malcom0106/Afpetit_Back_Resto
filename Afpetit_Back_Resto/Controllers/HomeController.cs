@@ -10,7 +10,14 @@ namespace Afpetit_Back_Resto.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if(Session["restaurant"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Connexion", "Restaurants");
+            }            
         }
 
         public ActionResult About()
